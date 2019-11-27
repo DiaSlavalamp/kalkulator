@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Калькулятор</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="calculator">
+    <h1>Hello, User!</h1>
+    <div id="message">
+        <div th:text="${message}"></div>
+        <div th:text="${captchaStatus}"></div>
+        <div th:text="'размер капчи ' + ${captchaSize} + '!'"></div>
+        <div th:text="${captcha}"></div>
+    </div>
+    <div>
+        <div id="captchaBlock">
+            <img id="captcha" th:src="@{'data:image/jpeg;base64,'+${captchaImage}}"
+                 alt="ошибка отображения"/>
+        </div>
+        <form method="post" action="index">
+            <label><input type="text" name="userCaptcha" placeholder="Введите капчу"/></label>
+            <label><input type="text" name="userExp" placeholder="Выражение" th:value="${returnedUserExp}"/></label>
+            <button type="submit" alt="Посчитать">
+                <div id="flex">
+                    <div class="charAnim">п<br>t<br>п<br></div>
+                    <div class="char">о с<br>о с<br>о с<br></div>
+                    <div class="charAnim">ч<br>o<br>ч<br></div>
+                    <div class="charAnim">и<br>u<br>и<br></div>
+                    <div class="charAnim">та<br>n<br>та<br></div>
+                    <div class="char">т<br>т<br>т<br></div>
+                    <div class="charAnim">ь<br> <br>ь<br></div>
+                </div>
+            </button>
+        </form>
+        <list>
+            <h3>Список выражений в базе SQL</h3>
+            <tr th:each="exp: ${expsBase}">
+                <td th:text="${exp.exp}+' = '+${exp.answer}"/>
+                <br>
+            </tr>
+        </list>
+    </div>
+    <img src="42.jpg" height="70" width="200" alt="ошибка отображения"/><br>
+</div>
+</body>
+</html>
