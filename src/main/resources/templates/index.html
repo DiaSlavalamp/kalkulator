@@ -12,7 +12,6 @@
         <div th:text="${message}"></div>
         <div th:text="${captchaStatus}"></div>
         <div th:text="'размер капчи ' + ${captchaSize} + '!'"></div>
-        <div th:text="${captcha}"></div>
     </div>
     <div>
         <div id="captchaBlock">
@@ -20,7 +19,7 @@
                  alt="ошибка отображения"/>
         </div>
         <form method="post" action="index">
-            <label><input type="text" name="userCaptcha" placeholder="Введите капчу"/></label>
+            <label><input type="text" name="userCaptcha" th:placeholder="${placeholder}"/></label>
             <label><input type="text" name="userExp" placeholder="Выражение" th:value="${returnedUserExp}"/></label>
             <button type="submit" alt="Посчитать">
                 <div id="flex">

@@ -48,12 +48,15 @@ public class RequestController {
         model.addAttribute("expsBase", expsBase);
         if (captchaON) {
             actualCaptcha = new Captcha();
-            model.addAttribute("captcha", actualCaptcha);
             model.addAttribute("captchaStatus", "капча включена");
             model.addAttribute("captchaSize", actualCaptcha.getSize());
             model.addAttribute("captchaImage", actualCaptcha.getBase64Image());
+            model.addAttribute("placeholder", "Введите капчу");
         }else {
             model.addAttribute("captchaStatus", "капча выключена");
+            model.addAttribute("captchaSize", 0);
+            model.addAttribute("captchaImage", Captcha.base64PalmImage());
+            model.addAttribute("placeholder", "Капча выключена");
         }
         return model;
     }

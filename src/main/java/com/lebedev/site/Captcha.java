@@ -1,24 +1,15 @@
 package com.lebedev.site;
 
-import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-@Component
-@PropertySource(value = "classpath:advanced.properties")
 public class Captcha {
 
-    @Value("${advanced.captchaSize}")
     int size = 6;
-    @Value("${advanced.captcha}")
-    private Boolean captchaON;
     private String value;
     private BufferedImage image;
     private String base64Image;
@@ -46,13 +37,13 @@ public class Captcha {
     public Captcha() {
         value = valueGenerate();
         image = createImage();
-        base64Image = toBase64(image);
+        base64Image = ToBase64Converter.convert(image);
     }
 
     private String valueGenerate() {
         value = "";
-        if (size > 15) {
-            size = 15;
+        if (size > 7) {
+            size = 7;
         }
         for (int i = 1; i <= size; i++) {
             value += (new Random()).nextInt(10);
@@ -83,17 +74,16 @@ public class Captcha {
         return image;
     }
 
-    private String toBase64(BufferedImage image) {
+
+    public static String base64PalmImage() {
+        BufferedImage palm = null;
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-            baos.flush();
-            byte[] imageInByte = baos.toByteArray();
-            baos.close();
-            base64Image = Base64.encodeBase64String(imageInByte);
+            File file = new File("src/main/resources/static/palm.png");
+            palm = ImageIO.read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return base64Image;
+        return ToBase64Converter.convert(palm);
+
     }
 }
